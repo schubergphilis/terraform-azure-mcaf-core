@@ -39,9 +39,3 @@ variable "tags" {
   default     = {}
 }
 
-variable "zones" {
-  type        = list(string)
-  default     = []
-  description = "A list of availability zones in which the resource should be created."
-}
-
