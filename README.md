@@ -36,7 +36,6 @@ Terraform module to create the Core component of each workload, currently only i
 | <a name="input_location"></a> [location](#input\_location) | Location of the resources to create | `string` | n/a | yes |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | The name of the resource group in which to create the resources. | <pre>object({<br>    name = string<br>  })</pre> | <pre>{<br>  "name": null<br>}</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `map(string)` | `{}` | no |
-| <a name="input_zones"></a> [zones](#input\_zones) | A list of availability zones in which the resource should be created. | `list(string)` | `[]` | no |
 
 ## Outputs
 
