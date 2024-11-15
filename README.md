@@ -19,7 +19,7 @@ Terraform module to create the Core component of each workload, currently only i
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_keyvault_with_cmk"></a> [keyvault\_with\_cmk](#module\_keyvault\_with\_cmk) | github.com/schubergphilis/terraform-azure-mcaf-key-vault.git | n/a |
+| <a name="module_keyvault_with_cmk"></a> [keyvault\_with\_cmk](#module\_keyvault\_with\_cmk) | github.com/schubergphilis/terraform-azure-mcaf-key-vault.git | v0.1.1 |
 
 ## Resources
 
