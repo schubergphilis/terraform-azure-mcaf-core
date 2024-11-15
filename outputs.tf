@@ -11,7 +11,7 @@ output "key_vault_uri" {
 }
 
 output "key_vault_cmkrsa_key_name" {
-  value       = module.keyvault_with_cmk.key_vault_cmkrsa_keyname
+  value       = module.keyvault_with_cmk.key_vault_cmkrsa_key_name
   description = "CMK RSA Key Name"
 }
 
