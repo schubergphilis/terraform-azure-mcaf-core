@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "keyvault_with_cmk" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.1.1"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.2.2"
 
   key_vault = {
     name                            = var.key_vault.name
@@ -25,6 +25,8 @@ module "keyvault_with_cmk" {
     enable_rbac_authorization       = true
     purge_protection                = true
     soft_delete_retention_days      = 30
+    public_network_access_enabled   = false
+    default_action                  = "Deny"
     sku                             = "standard"
     ip_rules                        = length(var.key_vault.ip_rules) == 0 ? null : var.key_vault.ip_rules
     subnet_ids                      = length(var.key_vault.subnet_ids) == 0 ? null : var.key_vault.subnet_ids
