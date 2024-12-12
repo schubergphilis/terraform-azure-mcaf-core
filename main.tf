@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "keyvault_with_cmk" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.2.2"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.3.1"
 
   key_vault = {
     name                            = var.key_vault.name
@@ -32,6 +32,9 @@ module "keyvault_with_cmk" {
     subnet_ids                      = length(var.key_vault.subnet_ids) == 0 ? null : var.key_vault.subnet_ids
     network_bypass                  = "AzureServices"
     cmk_keys_create                 = true
+    cmk_rotation_period             = var.key_vault.cmk_rotation_period
+    cmk_expiry_period               = var.key_vault.cmk_expiry_period
+    cmk_notify_period               = var.key_vault.cmk_notify_period
     cmkrsa_key_name                 = var.key_vault.cmkrsa_key_name
     cmkec_key_name                  = var.key_vault.cmkec_key_name
   }
