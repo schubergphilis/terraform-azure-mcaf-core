@@ -41,8 +41,11 @@ Terraform module to create the Core component of each workload, currently only i
 
 | Name | Description |
 |------|-------------|
-| <a name="output_key_vault_cmkrsa_id"></a> [key\_vault\_cmkrsa\_id](#output\_key\_vault\_cmkrsa\_id) | CMK RSA Key ID |
-| <a name="output_key_vault_cmkrsa_key_name"></a> [key\_vault\_cmkrsa\_key\_name](#output\_key\_vault\_cmkrsa\_key\_name) | CMK RSA Key Name |
+| <a name="output_cmkrsa_id"></a> [cmkrsa\_id](#output\_cmkrsa\_id) | CMK RSA Key ID |
+| <a name="output_cmkrsa_key_name"></a> [cmkrsa\_key\_name](#output\_cmkrsa\_key\_name) | CMK RSA Key Name |
+| <a name="output_cmkrsa_resource_resource_id"></a> [cmkrsa\_resource\_resource\_id](#output\_cmkrsa\_resource\_resource\_id) | CMK RSA Key Resource ID |
+| <a name="output_cmkrsa_resource_versionless_id"></a> [cmkrsa\_resource\_versionless\_id](#output\_cmkrsa\_resource\_versionless\_id) | CMK RSA Key ID |
+| <a name="output_cmkrsa_verionsless_id"></a> [cmkrsa\_verionsless\_id](#output\_cmkrsa\_verionsless\_id) | CMK RSA Key ID |
 | <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id) | n/a |
 | <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | n/a |
 | <a name="output_key_vault_uri"></a> [key\_vault\_uri](#output\_key\_vault\_uri) | n/a |
