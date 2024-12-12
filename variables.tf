@@ -24,7 +24,9 @@ variable "key_vault" {
     cmk_keys_create                 = optional(bool, true)
     cmkrsa_key_name                 = optional(string, "cmkrsa")
     cmkec_key_name                  = optional(string, "cmkec")
-    cmk_rotation_period             = optional(string, "P90D")
+    cmk_rotation_period             = optional(string, "P18M")
+    cmk_expiry_period               = optional(string, "P2Y")
+    cmk_notify_period               = optional(string, "P30D")
   })
 }
 

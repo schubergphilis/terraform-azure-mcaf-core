@@ -10,12 +10,27 @@ output "key_vault_uri" {
   value = module.keyvault_with_cmk.key_vault_uri
 }
 
-output "key_vault_cmkrsa_key_name" {
-  value       = module.keyvault_with_cmk.key_vault_cmkrsa_key_name
+output "cmkrsa_key_name" {
+  value       = module.keyvault_with_cmk.cmkrsa_key_name
   description = "CMK RSA Key Name"
 }
 
-output "key_vault_cmkrsa_id" {
-  value       = module.keyvault_with_cmk.key_vault_cmkrsa_id
+output "cmkrsa_id" {
+  value       = module.keyvault_with_cmk.cmkrsa_id
   description = "CMK RSA Key ID"
+}
+
+output "cmkrsa_verionsless_id" {
+  value       = module.keyvault_with_cmk.cmkrsa_versionless_id
+  description = "CMK RSA Key ID"
+}
+
+output "cmkrsa_resource_versionless_id" {
+  value       = module.keyvault_with_cmk.cmkrsa_resource_versionless_id
+  description = "CMK RSA Key ID"
+}
+
+output "cmkrsa_resource_resource_id" {
+  value       = module.keyvault_with_cmk.cmkrsa_resource_resource_id
+  description = "CMK RSA Key Resource ID"
 }
