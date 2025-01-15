@@ -19,19 +19,19 @@ module "keyvault_with_cmk" {
     tenant_id                       = data.azurerm_client_config.current.tenant_id
     resource_group_name             = azurerm_resource_group.this.name
     location                        = var.location
-    enabled_for_disk_encryption     = true
-    enabled_for_deployment          = false
-    enabled_for_template_deployment = false
-    enable_rbac_authorization       = true
+    enabled_for_disk_encryption     = var.key_vault.enabled_for_disk_encryption
+    enabled_for_deployment          = var.key_vault.enabled_for_deployment
+    enabled_for_template_deployment = var.key_vault.enabled_for_template_deployment
+    enable_rbac_authorization       = var.key_vault.enable_rbac_authorization
     purge_protection                = true
     soft_delete_retention_days      = 30
     public_network_access_enabled   = false
     default_action                  = "Deny"
-    sku                             = "standard"
+    sku                             = var.key_vault.sku
     ip_rules                        = length(var.key_vault.ip_rules) == 0 ? null : var.key_vault.ip_rules
     subnet_ids                      = length(var.key_vault.subnet_ids) == 0 ? null : var.key_vault.subnet_ids
     network_bypass                  = "AzureServices"
-    cmk_keys_create                 = true
+    cmk_keys_create                 = var.key_vault.cmk_keys_create
     cmk_rotation_period             = var.key_vault.cmk_rotation_period
     cmk_expiry_period               = var.key_vault.cmk_expiry_period
     cmk_notify_period               = var.key_vault.cmk_notify_period
