@@ -1,11 +1,11 @@
 variable "resource_group" {
   description = "The name of the resource group in which to create the resources."
-  type = object({
-    name = string
-  })
-  default = {
-    name = null
-  }
+  type        = string
+}
+
+variable "location" {
+  description = "Location of the resources to create"
+  type        = string
 }
 
 variable "key_vault" {
@@ -28,11 +28,6 @@ variable "key_vault" {
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
   })
-}
-
-variable "location" {
-  description = "Location of the resources to create"
-  type        = string
 }
 
 variable "tags" {
