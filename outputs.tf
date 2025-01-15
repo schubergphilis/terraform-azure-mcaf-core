@@ -20,7 +20,7 @@ output "cmkrsa_id" {
   description = "CMK RSA Key ID"
 }
 
-output "cmkrsa_verionsless_id" {
+output "cmkrsa_versionless_id" {
   value       = module.keyvault_with_cmk.cmkrsa_versionless_id
   description = "CMK RSA Key ID"
 }
