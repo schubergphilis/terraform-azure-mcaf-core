@@ -25,7 +25,7 @@ module "keyvault_with_cmk" {
     enable_rbac_authorization       = var.key_vault.enable_rbac_authorization
     purge_protection                = true
     soft_delete_retention_days      = 30
-    public_network_access_enabled   = false
+    public_network_access_enabled   = var.key_vault.public_network_access_enabled
     default_action                  = "Deny"
     sku                             = var.key_vault.sku
     ip_rules                        = length(var.key_vault.ip_rules) == 0 ? null : var.key_vault.ip_rules
