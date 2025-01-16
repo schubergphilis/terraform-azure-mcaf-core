@@ -18,6 +18,7 @@ variable "key_vault" {
     purge_protection                = optional(bool, true)
     soft_delete_retention_days      = optional(number, 30)
     sku                             = optional(string, "standard")
+    public_network_access_enabled   = optional(bool, false)
     ip_rules                        = optional(list(string), [])
     subnet_ids                      = optional(list(string), [])
     network_bypass                  = optional(string, "None")
