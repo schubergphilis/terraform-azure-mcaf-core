@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "keyvault_with_cmk" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.3.1"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.3.2"
 
   key_vault = {
     name                            = var.key_vault.name
