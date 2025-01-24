@@ -45,6 +45,7 @@ variable "recovery_service_vault" {
     cmk_identity                         = optional(string, null)
     cmk_key_vault_key_id                 = optional(string)
     system_assigned_identity_enabled     = optional(bool, false)
+    user_assigned_resource_ids           = optional(list(string), [])
   })
 
   default = null
