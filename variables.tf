@@ -27,6 +27,7 @@ variable "key_vault" {
     cmk_rotation_period             = optional(string, "P18M")
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
+    cmk_expiration_date             = optional(string, null)
   })
 }
 
