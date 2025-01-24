@@ -41,3 +41,43 @@ module "keyvault_with_cmk" {
 
   tags = var.tags
 }
+
+resource "azurerm_recovery_services_vault" "this" {
+  count                         = var.recovery_service_vault != null ? 1 : 0
+  name                          = var.recovery_service_vault.name
+  resource_group_name           = azurerm_resource_group.this.name
+  public_network_access_enabled = var.recovery_service_vault.public_network_access_enabled
+  sku                           = var.recovery_service_vault.sku
+  storage_mode_type             = var.recovery_service_vault.storage_mode_type
+  cross_region_restore_enabled  = var.recovery_service_vault.storage_mode_type == "GeoRedundant" ? true : false
+  location                      = var.location
+  soft_delete_enabled           =  var.recovery_service_vault.soft_delete_enabled
+  immutability                  = var.recovery_service_vault.immutability
+  tags                          = var.tags
+
+  monitoring {
+    alerts_for_all_job_failures_enabled = true
+    alerts_for_critical_operation_failures_enabled = true
+  }
+
+  dynamic "encryption" {
+    for_each = var.recovery_service_vault.cmk_encryption_enabled != null ? ["this"] : []
+
+    content {
+      infrastructure_encryption_enabled = true
+      user_assigned_identity_id = var.recovery_service_vault.system_assigned_identity_enabled == false ? var.recovery_service_vault.cmk_identity : null
+      use_system_assigned_identity = var.recovery_service_vault.system_assigned_identity_enabled
+      key_id   = var.recovery_service_vault.cmk_key_vault_key_id != null ? var.recovery_service_vault.cmk_key_vault_key_id : module.keyvault_with_cmk.cmkrsa_versionless_id
+    }
+  }
+
+  dynamic "identity" {
+    for_each = coalesce(local.identity_system_assigned_user_assigned, local.identity_system_assigned, local.identity_user_assigned, {})
+
+    content {
+      type         = identity.value.type
+      identity_ids = identity.value.user_assigned_resource_ids
+    }
+  }
+
+}
