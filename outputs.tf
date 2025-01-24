@@ -34,3 +34,8 @@ output "cmkrsa_resource_resource_id" {
   value       = module.keyvault_with_cmk.cmkrsa_resource_resource_id
   description = "CMK RSA Key Resource ID"
 }
+
+output "recovery_services_vault_id" {
+  value = module.recovery_service_vault.recovery_service_vault_id
+  description = "The Recovery Services "
+}
