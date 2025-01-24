@@ -57,7 +57,7 @@ module "recovery_service_vault" {
   cmk_encryption_enabled           = var.recovery_service_vault.cmk_encryption_enabled
   system_assigned_identity_enabled = var.recovery_service_vault.system_assigned_identity_enabled
   cmk_identity                     = var.recovery_service_vault.cmk_identity
-  cmk_key_vault_key_id             = var.recovery_service_vault.cmk_key_vault_key_id
+  cmk_key_vault_key_id             = module.keyvault_with_cmk.cmkrsa_versionless_id
   user_assigned_resource_ids       = var.recovery_service_vault.user_assigned_resource_ids
   tags                             = var.tags
 }
