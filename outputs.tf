@@ -36,6 +36,6 @@ output "cmkrsa_resource_resource_id" {
 }
 
 output "recovery_services_vault_id" {
-  value = module.recovery_service_vault.recovery_service_vault_id
+  value = module.recovery_services_vault.recovery_services_vault_id
   description = "The Recovery Services "
 }
