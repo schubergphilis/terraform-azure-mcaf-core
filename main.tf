@@ -43,7 +43,7 @@ module "keyvault_with_cmk" {
 }
 
 module "recovery_services_vault" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.1.0"
   count  = var.recovery_services_vault != null ? 1 : 0
 
   name                             = var.recovery_services_vault.name
