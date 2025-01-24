@@ -31,7 +31,7 @@ variable "key_vault" {
   })
 }
 
-variable "recovery_service_vault" {
+variable "recovery_services_vault" {
   description = "Configuration object for Azure Recovery Services Vault"
 
   type = object({
