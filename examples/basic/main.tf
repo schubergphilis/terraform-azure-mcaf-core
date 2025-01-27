@@ -17,9 +17,7 @@ provider "azurerm" {
 module "azure_core" {
   source = "../.."
 
-  resource_group = {
-    name = "example-rg"
-  }
+  resource_group_name = "example-rg"
 
   key_vault = {
     name = "example-kv"

@@ -31,6 +31,26 @@ variable "key_vault" {
   })
 }
 
+variable "recovery_services_vault" {
+  description = "Configuration object for Azure Recovery Services Vault"
+
+  type = object({
+    name                             = string
+    public_network_access_enabled    = optional(bool, false)
+    sku                              = optional(string, "Standard")
+    storage_mode_type                = optional(string, "ZoneRedundant")
+    soft_delete_enabled              = optional(bool, true)
+    immutability                     = optional(bool, null)
+    cmk_encryption_enabled           = optional(bool, false)
+    cmk_identity                     = optional(string, null)
+    cmk_key_vault_key_id             = optional(string, null)
+    system_assigned_identity_enabled = optional(bool, false)
+    user_assigned_resource_ids       = optional(list(string), [])
+  })
+
+  default = null
+}
+
 variable "tags" {
   description = "A map of tags to assign to the resource."
   type        = map(string)

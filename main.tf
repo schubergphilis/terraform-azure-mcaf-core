@@ -41,3 +41,23 @@ module "keyvault_with_cmk" {
 
   tags = var.tags
 }
+
+module "recovery_services_vault" {
+  source = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.1.0"
+  count  = var.recovery_services_vault != null ? 1 : 0
+
+  name                             = var.recovery_services_vault.name
+  resource_group_name              = azurerm_resource_group.this.name
+  location                         = var.location
+  public_network_access_enabled    = var.recovery_services_vault.public_network_access_enabled
+  sku                              = var.recovery_services_vault.sku
+  storage_mode_type                = var.recovery_services_vault.storage_mode_type
+  soft_delete_enabled              = var.recovery_services_vault.soft_delete_enabled
+  immutability                     = var.recovery_services_vault.immutability
+  cmk_encryption_enabled           = var.recovery_services_vault.cmk_encryption_enabled
+  system_assigned_identity_enabled = var.recovery_services_vault.system_assigned_identity_enabled
+  cmk_identity                     = var.recovery_services_vault.cmk_identity
+  cmk_key_vault_key_id             = module.keyvault_with_cmk.cmkrsa_versionless_id
+  user_assigned_resource_ids       = var.recovery_services_vault.user_assigned_resource_ids
+  tags                             = var.tags
+}
