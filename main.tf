@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 module "keyvault_with_cmk" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.3.1"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-key-vault.git?ref=v0.3.2"
 
   key_vault = {
     name                            = var.key_vault.name
@@ -37,9 +37,11 @@ module "keyvault_with_cmk" {
     cmk_notify_period               = var.key_vault.cmk_notify_period
     cmkrsa_key_name                 = var.key_vault.cmkrsa_key_name
     cmkec_key_name                  = var.key_vault.cmkec_key_name
+    cmk_expiration_date             = var.key_vault.cmk_expiration_date
   }
 
-  tags = var.tags
+  key_vault_key = var.key_vault_key
+  tags          = var.tags
 }
 
 module "recovery_services_vault" {

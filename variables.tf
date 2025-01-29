@@ -28,7 +28,55 @@ variable "key_vault" {
     cmk_rotation_period             = optional(string, "P18M")
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
+    cmk_expiration_date             = optional(string, null)
   })
+}
+
+variable "key_vault_key" {
+  type = map(object({
+    name            = optional(string, null)
+    curve           = optional(string, null)
+    size            = optional(number, null)
+    type            = optional(string, null)
+    opts            = optional(list(string), null)
+    expiration_date = optional(string, null)
+    not_before_date = optional(string, null)
+    rotation_policy = optional(object({
+      automatic = optional(object({
+        time_after_creation = optional(string, null)
+        time_before_expiry  = optional(string, null)
+      }), null)
+      expire_after         = optional(string, null)
+      notify_before_expiry = optional(string, null)
+    }), null)
+    tags = optional(map(string), {})
+  }))
+  default     = {}
+  description = <<DESCRIPTION
+This map describes the configuration for Azure Key Vault keys.
+
+- `key_vault_id` - (Required) The ID of the Key Vault.
+- `key_type` - (Required) The type of the key.
+- `key_size` - (Required) The size of the key.
+- `key_opts` - (Required) The key operations that are permitted.
+
+Example Inputs:
+
+```hcl
+  key_vault_key = {
+    key_rsa = {
+      type = "RSA"
+      size = 4096
+      opts = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    }
+    key_ec = {
+      type = "EC"
+      curve = "P-256"
+      opts = ["sign", "verify"]
+    }
+  }
+```
+DESCRIPTION
 }
 
 variable "recovery_services_vault" {
