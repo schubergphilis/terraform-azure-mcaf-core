@@ -127,7 +127,7 @@ variable "boot_diag_storage_account" {
   })
   default = null
   validation {
-    condition     = contains(["LRS", "GRS", "RAGRS"], var.subscription_details.account_replication_type)
+    condition     = contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
     error_message = "account_replication_type must be either 'LRS', 'GRS' or 'RAGRS'"
   }
 }
