@@ -105,3 +105,27 @@ variable "tags" {
   default     = {}
 }
 
+variable "boot_diag_storage_account" {
+  type = object({
+    name                              = string
+    public_network_access_enabled     = optional(bool, false)
+    account_tier                      = optional(string, "Standard")
+    account_replication_type          = optional(string, "ZRS")
+    access_tier                       = optional(string, "Cool")
+    log_retention_days                = optional(number, null)
+    move_to_cold_after_days           = optional(number, null)
+    move_to_archive_after_days        = optional(number, null)
+    snapshot_retention_days           = optional(number, 90)
+    infrastructure_encryption_enabled = optional(bool, true)
+    cmk_key_vault_id                  = optional(string, null)
+    cmk_key_name                      = optional(string, null)
+    system_assigned_identity_enabled  = optional(bool, false)
+    user_assigned_identities          = optional(list(string), [])
+    immutability_policy = optional(object({
+      state                         = optional(string, "Unlocked")
+      allow_protected_append_writes = optional(bool, true)
+      period_since_creation_in_days = optional(number, 14)
+    }), null)
+  })
+  default = null
+}
