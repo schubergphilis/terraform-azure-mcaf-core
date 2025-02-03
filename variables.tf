@@ -110,16 +110,15 @@ variable "boot_diag_storage_account" {
     name                              = string
     public_network_access_enabled     = optional(bool, false)
     account_tier                      = optional(string, "Standard")
-    account_replication_type          = optional(string, "ZRS")
-    access_tier                       = optional(string, "Cool")
+    account_replication_type          = optional(string, "LRS")
+    access_tier                       = optional(string, "Hot")
     log_retention_days                = optional(number, null)
-    move_to_cold_after_days           = optional(number, null)
-    move_to_archive_after_days        = optional(number, null)
     snapshot_retention_days           = optional(number, 90)
     infrastructure_encryption_enabled = optional(bool, true)
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(list(string), [])
+    auto_configure_firewall           = optional(bool, true)
     immutability_policy = optional(object({
       state                         = optional(string, "Unlocked")
       allow_protected_append_writes = optional(bool, true)
@@ -127,4 +126,8 @@ variable "boot_diag_storage_account" {
     }), null)
   })
   default = null
+  validation {
+    condition     = contains(["LRS", "GRS", "RAGRS"], var.subscription_details.account_replication_type)
+    error_message = "account_replication_type must be either 'LRS', 'GRS' or 'RAGRS'"
+  }
 }

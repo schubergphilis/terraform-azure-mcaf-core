@@ -64,6 +64,13 @@ module "recovery_services_vault" {
   tags                             = var.tags
 }
 
+data "azurerm_network_service_tags" "boot_diag" {
+  count           = var.boot_diag_storage_account != null ? 1 : 0
+  location        = var.location
+  service         = "SerialConsole"
+  location_filter = var.location
+}
+
 module "boot_diag_storage_account" {
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.4.0"
   count  = var.boot_diag_storage_account != null ? 1 : 0
@@ -75,7 +82,6 @@ module "boot_diag_storage_account" {
   account_replication_type          = var.boot_diag_storage_account.account_replication_type
   account_kind                      = "StorageV2"
   access_tier                       = var.boot_diag_storage_account.access_tier
-  public_network_access_enabled     = var.boot_diag_storage_account.public_network_access_enabled
   https_traffic_only_enabled        = true
   infrastructure_encryption_enabled = var.boot_diag_storage_account.infrastructure_encryption_enabled
   cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
@@ -83,6 +89,7 @@ module "boot_diag_storage_account" {
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
+  ip_rules                          = data.azurerm_network_service_tags.boot_diag[0].ipv4_cidrs
   tags = merge(
     try(var.tags),
     tomap({
