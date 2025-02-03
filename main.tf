@@ -89,7 +89,7 @@ module "boot_diag_storage_account" {
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
-  ip_rules                          = data.azurerm_network_service_tags.boot_diag[0].ipv4_cidrs
+  ip_rules                          = data.azurerm_network_service_tags.boot_diag[0].address_prefixes
   tags = merge(
     try(var.tags),
     tomap({
