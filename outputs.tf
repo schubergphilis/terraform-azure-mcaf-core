@@ -39,3 +39,7 @@ output "recovery_services_vault_id" {
   value       = var.recovery_services_vault != null ? module.recovery_services_vault[0].recovery_services_vault_id : null
   description = "The Recovery Services Vault ID"
 }
+
+output "storage_account_id" {
+  value = var.boot_diag_storage_account != null ? module.boot_diag_storage_account[0].id : null
+}

@@ -78,8 +78,8 @@ module "boot_diag_storage_account" {
   public_network_access_enabled     = var.boot_diag_storage_account.public_network_access_enabled
   https_traffic_only_enabled        = true
   infrastructure_encryption_enabled = var.boot_diag_storage_account.infrastructure_encryption_enabled
-  cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_key_vault_id
-  cmk_key_name                      = var.boot_diag_storage_account.cmk_key_name
+  cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
+  cmk_key_name                      = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy

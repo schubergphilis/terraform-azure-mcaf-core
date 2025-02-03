@@ -117,8 +117,7 @@ variable "boot_diag_storage_account" {
     move_to_archive_after_days        = optional(number, null)
     snapshot_retention_days           = optional(number, 90)
     infrastructure_encryption_enabled = optional(bool, true)
-    cmk_key_vault_id                  = optional(string, null)
-    cmk_key_name                      = optional(string, null)
+    cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(list(string), [])
     immutability_policy = optional(object({
