@@ -65,9 +65,9 @@ module "recovery_services_vault" {
 }
 
 data "azurerm_network_service_tags" "boot_diag" {
-  count           = var.boot_diag_storage_account != null ? 1 : 0
-  location        = var.location
-  service         = "SerialConsole"
+  count    = var.boot_diag_storage_account != null ? 1 : 0
+  location = var.location
+  service  = "SerialConsole"
 }
 
 module "boot_diag_storage_account" {
@@ -88,11 +88,7 @@ module "boot_diag_storage_account" {
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
+  public_network_access_enabled     = true
   ip_rules                          = ["20.52.94.114", "20.52.94.115", "20.52.95.48", "20.113.251.155", "51.116.75.88", "51.116.75.89", "51.116.75.90", "98.67.183.186"]
-  tags = merge(
-    try(var.tags),
-    tomap({
-      "Resource Type" = "Storage Account"
-    })
-  )
+  tags                              = var.tags
 }
