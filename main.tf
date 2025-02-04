@@ -89,6 +89,6 @@ module "boot_diag_storage_account" {
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
   public_network_access_enabled     = true
-  ip_rules                          = ["20.52.94.114", "20.52.94.115", "20.52.95.48", "20.113.251.155", "51.116.75.88", "51.116.75.89", "51.116.75.90", "98.67.183.186"]
+  ip_rules                          = var.boot_diag_storage_account.ip_rules
   tags                              = var.tags
 }

@@ -118,7 +118,7 @@ variable "boot_diag_storage_account" {
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(list(string), [])
-    auto_configure_firewall           = optional(bool, true)
+    ip_rules                          = list(string)
     immutability_policy = optional(object({
       state                         = optional(string, "Unlocked")
       allow_protected_append_writes = optional(bool, true)
