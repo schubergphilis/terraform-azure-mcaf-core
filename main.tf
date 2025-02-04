@@ -71,7 +71,7 @@ data "azurerm_network_service_tags" "boot_diag" {
 }
 
 module "boot_diag_storage_account" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.4.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=to-version-1"
   count  = var.boot_diag_storage_account != null ? 1 : 0
 
   name                              = var.boot_diag_storage_account.name
@@ -81,14 +81,23 @@ module "boot_diag_storage_account" {
   account_replication_type          = var.boot_diag_storage_account.account_replication_type
   account_kind                      = "StorageV2"
   access_tier                       = var.boot_diag_storage_account.access_tier
-  https_traffic_only_enabled        = true
   infrastructure_encryption_enabled = var.boot_diag_storage_account.infrastructure_encryption_enabled
   cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
   cmk_key_name                      = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
-  public_network_access_enabled     = true
-  ip_rules                          = var.boot_diag_storage_account.ip_rules
-  tags                              = var.tags
+  network_configuration = {
+    https_traffic_only_enabled      = true
+    allow_nested_items_to_be_public = true
+    public_network_access_enabled   = true
+    default_action                  = var.boot_diag_storage.ip_rules ? "Deny" : "Allow"
+    ip_rules                        = var.boot_diag_storage.ip_rules
+    bypass                          = ["AzureServices"]
+  }
+  storage_management_policy = {
+    blob_delete_retention_days      = 90
+    container_delete_retention_days = 90
+  }
+  tags = var.tags
 }

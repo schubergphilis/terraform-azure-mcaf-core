@@ -108,12 +108,9 @@ variable "tags" {
 variable "boot_diag_storage_account" {
   type = object({
     name                              = string
-    public_network_access_enabled     = optional(bool, false)
     account_tier                      = optional(string, "Standard")
     account_replication_type          = optional(string, "LRS")
     access_tier                       = optional(string, "Hot")
-    log_retention_days                = optional(number, null)
-    snapshot_retention_days           = optional(number, 90)
     infrastructure_encryption_enabled = optional(bool, true)
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
