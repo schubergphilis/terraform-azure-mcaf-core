@@ -91,8 +91,8 @@ module "boot_diag_storage_account" {
     https_traffic_only_enabled      = true
     allow_nested_items_to_be_public = true
     public_network_access_enabled   = true
-    default_action                  = var.boot_diag_storage.ip_rules ? "Deny" : "Allow"
-    ip_rules                        = var.boot_diag_storage.ip_rules
+    default_action                  = var.boot_diag_storage_account.ip_rules ? "Deny" : "Allow"
+    ip_rules                        = var.boot_diag_storage_account.ip_rules
     bypass                          = ["AzureServices"]
   }
   storage_management_policy = {
