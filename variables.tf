@@ -19,8 +19,8 @@ variable "key_vault" {
     soft_delete_retention_days      = optional(number, 30)
     sku                             = optional(string, "standard")
     public_network_access_enabled   = optional(bool, false)
-    ip_rules                        = optional(list(string), [])
-    subnet_ids                      = optional(list(string), [])
+    ip_rules                        = optional(set(string), [])
+    subnet_ids                      = optional(set(string), [])
     network_bypass                  = optional(string, "None")
     cmk_keys_create                 = optional(bool, true)
     cmkrsa_key_name                 = optional(string, "cmkrsa")
@@ -38,7 +38,7 @@ variable "key_vault_key" {
     curve           = optional(string, null)
     size            = optional(number, null)
     type            = optional(string, null)
-    opts            = optional(list(string), null)
+    opts            = optional(set(string), null)
     expiration_date = optional(string, null)
     not_before_date = optional(string, null)
     rotation_policy = optional(object({
@@ -93,14 +93,14 @@ variable "recovery_services_vault" {
     cmk_identity                     = optional(string, null)
     cmk_key_vault_key_id             = optional(string, null)
     system_assigned_identity_enabled = optional(bool, false)
-    user_assigned_resource_ids       = optional(list(string), [])
+    user_assigned_resource_ids       = optional(set(string), [])
   })
 
   default = null
 }
 
 variable "boot_diag_storage_account" {
-  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, does not support Zone Redundant Storage and does not support storage tiering settings"
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do* not support storage tiering settings"
   type = object({
     name                              = string
     account_tier                      = optional(string, "Standard")
@@ -109,8 +109,8 @@ variable "boot_diag_storage_account" {
     infrastructure_encryption_enabled = optional(bool, true)
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
-    user_assigned_identities          = optional(list(string), [])
-    ip_rules                          = optional(list(string), null)
+    user_assigned_identities          = optional(set(string), [])
+    ip_rules                          = optional(set(string), null)
     storage_management_policy = optional(object({
       blob_delete_retention_days      = optional(number, 90)
       container_delete_retention_days = optional(number, 90)
@@ -124,7 +124,7 @@ variable "boot_diag_storage_account" {
   default = null
 
   validation {
-    condition     = contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
+    condition     = var.boot_diag_storage_account == null || contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
     error_message = "boot diagnostic storage accounts must be either 'LRS', 'GRS' or 'RAGRS'"
   }
 }

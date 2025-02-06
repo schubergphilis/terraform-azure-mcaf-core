@@ -71,7 +71,7 @@ data "azurerm_network_service_tags" "boot_diag" {
 }
 
 module "boot_diag_storage_account" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.5.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.6.0"
   count  = var.boot_diag_storage_account != null ? 1 : 0
 
   name                              = var.boot_diag_storage_account.name
@@ -96,8 +96,8 @@ module "boot_diag_storage_account" {
     bypass                          = ["AzureServices"]
   }
   storage_management_policy = {
-    blob_delete_retention_days      = var.storage_management_policy.blob_delete_retention_days
-    container_delete_retention_days = var.storage_management_policy.container_delete_retention_days
+    blob_delete_retention_days      = var.boot_diag_storage_account.storage_management_policy.blob_delete_retention_days
+    container_delete_retention_days = var.boot_diag_storage_account.storage_management_policy.container_delete_retention_days
   }
   tags = var.tags
 }
