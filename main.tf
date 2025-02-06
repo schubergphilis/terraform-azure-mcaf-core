@@ -64,12 +64,6 @@ module "recovery_services_vault" {
   tags                             = var.tags
 }
 
-data "azurerm_network_service_tags" "boot_diag" {
-  count    = var.boot_diag_storage_account != null ? 1 : 0
-  location = var.location
-  service  = "SerialConsole"
-}
-
 module "boot_diag_storage_account" {
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.6.0"
   count  = var.boot_diag_storage_account != null ? 1 : 0
