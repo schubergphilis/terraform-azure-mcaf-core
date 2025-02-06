@@ -99,13 +99,8 @@ variable "recovery_services_vault" {
   default = null
 }
 
-variable "tags" {
-  description = "A map of tags to assign to the resource."
-  type        = map(string)
-  default     = {}
-}
-
 variable "boot_diag_storage_account" {
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, does not support Zone Redundant Storage and does not support storage tiering settings"
   type = object({
     name                              = string
     account_tier                      = optional(string, "Standard")
@@ -115,7 +110,11 @@ variable "boot_diag_storage_account" {
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(list(string), [])
-    ip_rules                          = list(string)
+    ip_rules                          = optional(list(string), null)
+    storage_management_policy = optional(object({
+      blob_delete_retention_days      = optional(number, 90)
+      container_delete_retention_days = optional(number, 90)
+    }), null)
     immutability_policy = optional(object({
       state                         = optional(string, "Unlocked")
       allow_protected_append_writes = optional(bool, true)
@@ -123,8 +122,15 @@ variable "boot_diag_storage_account" {
     }), null)
   })
   default = null
+
   validation {
     condition     = contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
-    error_message = "account_replication_type must be either 'LRS', 'GRS' or 'RAGRS'"
+    error_message = "boot diagnostic storage accounts must be either 'LRS', 'GRS' or 'RAGRS'"
   }
+}
+
+variable "tags" {
+  description = "A map of tags to assign to the resource."
+  type        = map(string)
+  default     = {}
 }
