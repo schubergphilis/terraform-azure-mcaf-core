@@ -122,11 +122,6 @@ variable "boot_diag_storage_account" {
     }), null)
   })
   default = null
-
-  validation {
-    condition     = var.boot_diag_storage_account == null || contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
-    error_message = "boot diagnostic storage accounts must be either 'LRS', 'GRS' or 'RAGRS'"
-  }
 }
 
 variable "tags" {
