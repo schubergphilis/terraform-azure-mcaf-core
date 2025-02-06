@@ -63,3 +63,35 @@ module "recovery_services_vault" {
   user_assigned_resource_ids       = var.recovery_services_vault.user_assigned_resource_ids
   tags                             = var.tags
 }
+
+module "boot_diag_storage_account" {
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.6.0"
+  count  = var.boot_diag_storage_account != null ? 1 : 0
+
+  name                              = var.boot_diag_storage_account.name
+  location                          = var.location
+  resource_group_name               = azurerm_resource_group.this.name
+  account_tier                      = var.boot_diag_storage_account.account_tier
+  account_replication_type          = var.boot_diag_storage_account.account_replication_type
+  account_kind                      = "StorageV2"
+  access_tier                       = var.boot_diag_storage_account.access_tier
+  infrastructure_encryption_enabled = var.boot_diag_storage_account.infrastructure_encryption_enabled
+  cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
+  cmk_key_name                      = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
+  system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
+  user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
+  immutability_policy               = var.boot_diag_storage_account.immutability_policy
+  network_configuration = {
+    https_traffic_only_enabled      = true
+    allow_nested_items_to_be_public = true
+    public_network_access_enabled   = true
+    default_action                  = var.boot_diag_storage_account.ip_rules != null ? "Deny" : "Allow"
+    ip_rules                        = var.boot_diag_storage_account.ip_rules
+    bypass                          = ["AzureServices"]
+  }
+  storage_management_policy = {
+    blob_delete_retention_days      = var.boot_diag_storage_account.storage_management_policy.blob_delete_retention_days
+    container_delete_retention_days = var.boot_diag_storage_account.storage_management_policy.container_delete_retention_days
+  }
+  tags = var.tags
+}

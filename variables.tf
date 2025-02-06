@@ -19,8 +19,8 @@ variable "key_vault" {
     soft_delete_retention_days      = optional(number, 30)
     sku                             = optional(string, "standard")
     public_network_access_enabled   = optional(bool, false)
-    ip_rules                        = optional(list(string), [])
-    subnet_ids                      = optional(list(string), [])
+    ip_rules                        = optional(set(string), [])
+    subnet_ids                      = optional(set(string), [])
     network_bypass                  = optional(string, "None")
     cmk_keys_create                 = optional(bool, true)
     cmkrsa_key_name                 = optional(string, "cmkrsa")
@@ -38,7 +38,7 @@ variable "key_vault_key" {
     curve           = optional(string, null)
     size            = optional(number, null)
     type            = optional(string, null)
-    opts            = optional(list(string), null)
+    opts            = optional(set(string), null)
     expiration_date = optional(string, null)
     not_before_date = optional(string, null)
     rotation_policy = optional(object({
@@ -93,9 +93,34 @@ variable "recovery_services_vault" {
     cmk_identity                     = optional(string, null)
     cmk_key_vault_key_id             = optional(string, null)
     system_assigned_identity_enabled = optional(bool, false)
-    user_assigned_resource_ids       = optional(list(string), [])
+    user_assigned_resource_ids       = optional(set(string), [])
   })
 
+  default = null
+}
+
+variable "boot_diag_storage_account" {
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do* not support storage tiering settings"
+  type = object({
+    name                              = string
+    account_tier                      = optional(string, "Standard")
+    account_replication_type          = optional(string, "LRS")
+    access_tier                       = optional(string, "Hot")
+    infrastructure_encryption_enabled = optional(bool, true)
+    cmk_encryption_enabled            = optional(bool, false)
+    system_assigned_identity_enabled  = optional(bool, false)
+    user_assigned_identities          = optional(set(string), [])
+    ip_rules                          = optional(set(string), null)
+    storage_management_policy = optional(object({
+      blob_delete_retention_days      = optional(number, 90)
+      container_delete_retention_days = optional(number, 90)
+    }), null)
+    immutability_policy = optional(object({
+      state                         = optional(string, "Unlocked")
+      allow_protected_append_writes = optional(bool, true)
+      period_since_creation_in_days = optional(number, 14)
+    }), null)
+  })
   default = null
 }
 
@@ -104,4 +129,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-
