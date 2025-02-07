@@ -65,7 +65,7 @@ module "recovery_services_vault" {
 }
 
 module "boot_diag_storage_account" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.6.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
   count  = var.boot_diag_storage_account != null ? 1 : 0
 
   name                              = var.boot_diag_storage_account.name
@@ -89,9 +89,6 @@ module "boot_diag_storage_account" {
     ip_rules                        = var.boot_diag_storage_account.ip_rules
     bypass                          = ["AzureServices"]
   }
-  storage_management_policy = {
-    blob_delete_retention_days      = var.boot_diag_storage_account.storage_management_policy.blob_delete_retention_days
-    container_delete_retention_days = var.boot_diag_storage_account.storage_management_policy.container_delete_retention_days
-  }
+  storage_management_policy = var.boot_diag_storage_account.storage_management_policy
   tags = var.tags
 }
