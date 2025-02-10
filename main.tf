@@ -81,6 +81,7 @@ module "boot_diag_storage_account" {
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
   user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
+  storage_management_policy         = var.boot_diag_storage_account.storage_management_policy
   network_configuration = {
     https_traffic_only_enabled      = true
     allow_nested_items_to_be_public = true
@@ -89,6 +90,5 @@ module "boot_diag_storage_account" {
     ip_rules                        = var.boot_diag_storage_account.ip_rules
     bypass                          = ["AzureServices"]
   }
-  storage_management_policy = var.boot_diag_storage_account.storage_management_policy
   tags = var.tags
 }
