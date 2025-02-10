@@ -89,9 +89,6 @@ module "boot_diag_storage_account" {
     ip_rules                        = var.boot_diag_storage_account.ip_rules
     bypass                          = ["AzureServices"]
   }
-  storage_management_policy = {
-    blob_delete_retention_days      = var.boot_diag_storage_account.storage_management_policy.blob_delete_retention_days
-    container_delete_retention_days = var.boot_diag_storage_account.storage_management_policy.container_delete_retention_days
-  }
+  storage_management_policy = var.boot_diag_storage_account.storage_management_policy
   tags = var.tags
 }
