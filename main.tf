@@ -56,7 +56,7 @@ module "recovery_services_vault" {
   soft_delete_enabled              = var.recovery_services_vault.soft_delete_enabled
   system_assigned_identity_enabled = var.recovery_services_vault.system_assigned_identity_enabled
   user_assigned_identities         = var.recovery_services_vault.user_assigned_identities
-  cmk_identity_id                  = var.recovery_services_vault.cmk_identity_id
+  cmk_identity_id                  = var.recovery_services_vault.cmk_encryption_enabled ? var.recovery_services_vault.cmk_identity_id : null
   cmk_key_vault_key_id             = var.recovery_services_vault.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_versionless_id : null
   immutability                     = var.recovery_services_vault.immutability
   location                         = var.location
