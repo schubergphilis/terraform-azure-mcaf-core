@@ -46,7 +46,7 @@ module "keyvault_with_cmk" {
 
 module "recovery_services_vault" {
   count                    = var.recovery_services_vault != null ? 1 : 0
-  source                   = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.1.1"
+  source                   = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=encryption-fix"
   resource_group_name      = azurerm_resource_group.this.name
   location                 = var.location
   recovery_services_vault  = var.recovery_services_vault
