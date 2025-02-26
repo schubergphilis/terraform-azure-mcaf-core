@@ -83,7 +83,7 @@ DESCRIPTION
 
 ## Boot Diag storage account variables
 variable "boot_diag_storage_account" {
-  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do* not support storage tiering settings"
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do not support storage tiering settings"
   type = object({
     name                              = string
     account_tier                      = optional(string, "Standard")
@@ -104,7 +104,7 @@ variable "boot_diag_storage_account" {
       period_since_creation_in_days = optional(number, 14)
     }), null)
   })
-  default = {}
+  default = null
 }
 
 variable "tags" {

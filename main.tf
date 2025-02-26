@@ -45,18 +45,19 @@ module "keyvault_with_cmk" {
 }
 
 module "recovery_services_vault" {
+  count                    = var.recovery_services_vault != null ? 1 : 0
   source                   = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.1.1"
   resource_group_name      = azurerm_resource_group.this.name
   location                 = var.location
   recovery_services_vault  = var.recovery_services_vault
-  rsv_encryption           = var.rsv_encryption
   vm_backup_policy         = var.vm_backup_policy
   file_share_backup_policy = var.file_share_backup_policy
   tags                     = var.tags
 }
 
 module "backup_vault" {
-  source                     = "github.com/schubergphilis/terraform-azure-mcaf-backup-vault.git?ref=v0.1.0"
+  count                      = var.backup_vault != null ? 1 : 0
+  source                     = "github.com/schubergphilis/terraform-azure-mcaf-backup-vault.git?ref=v0.1.1"
   resource_group_name        = azurerm_resource_group.this.name
   location                   = var.location
   backup_vault               = var.backup_vault

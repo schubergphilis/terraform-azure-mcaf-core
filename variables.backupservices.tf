@@ -9,21 +9,13 @@ variable "recovery_services_vault" {
     cross_region_restore_enabled     = optional(bool, false)
     soft_delete_enabled              = optional(bool, true)
     system_assigned_identity_enabled = optional(bool, true)
-    immutability                     = optional(string, null),
+    cmk_encryption_enabled           = optional(bool, false)
+    cmk_identity                     = optional(string, null)
+    cmk_key_vault_key_id             = optional(string, null)
+    immutability                     = optional(string, null)
+    tags                             = optional(map(string), {})
   })
-}
-
-variable "rsv_encryption" {
-  type = object({
-    cmk_encryption_enabled = optional(string)
-    cmk_identity           = optional(string)
-    cmk_key_vault_key_id   = optional(string)
-  })
-  default = {
-    cmk_encryption_enabled = false
-    cmk_identity           = null
-    cmk_key_vault_key_id   = null
-  }
+  default = null
 }
 
 variable "vm_backup_policy" {
@@ -248,7 +240,7 @@ variable "backup_vault" {
     soft_delete_retention_days = number
     cmk_key_vault_key_id       = optional(string, null)
   })
-  default = {}
+  default = null
 }
 
 variable "blob_storage_backup_policy" {
