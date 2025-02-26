@@ -8,7 +8,7 @@ variable "recovery_services_vault" {
     cross_region_restore_enabled     = optional(bool, false)
     soft_delete_enabled              = optional(bool, true)
     system_assigned_identity_enabled = optional(bool, true)
-    user_assigned_resource_ids       = optional(set(string), [])
+    user_assigned_identities         = optional(set(string), [])
     cmk_identity_id                  = optional(string, null)
     cmk_key_vault_key_id             = optional(string, null)
     immutability                     = optional(string, null)
