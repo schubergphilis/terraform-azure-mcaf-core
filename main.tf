@@ -55,8 +55,7 @@ module "recovery_services_vault" {
   cross_region_restore_enabled     = var.recovery_services_vault.cross_region_restore_enabled
   soft_delete_enabled              = var.recovery_services_vault.soft_delete_enabled
   system_assigned_identity_enabled = var.recovery_services_vault.system_assigned_identity_enabled
-  cmk_encryption_enabled           = var.recovery_services_vault.cmk_encryption_enabled
-  cmk_identity                     = var.recovery_services_vault.cmk_identity
+  cmk_identity_id                  = var.recovery_services_vault.cmk_identity_id
   cmk_key_vault_key_id             = var.recovery_services_vault.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_versionless_id : null
   immutability                     = var.recovery_services_vault.immutability
   location                         = var.location
@@ -91,7 +90,7 @@ module "boot_diag_storage_account" {
   cmk_key_vault_id                  = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
   cmk_key_name                      = var.boot_diag_storage_account.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
   system_assigned_identity_enabled  = var.boot_diag_storage_account.system_assigned_identity_enabled
-  user_assigned_identities          = var.boot_diag_storage_account.user_assigned_identities
+  user_assigned_identities          = var.boot_diag_storage_account.user_assigned_resource_ids
   immutability_policy               = var.boot_diag_storage_account.immutability_policy
   network_configuration = {
     https_traffic_only_enabled      = true
