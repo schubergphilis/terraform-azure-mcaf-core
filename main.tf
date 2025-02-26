@@ -45,14 +45,24 @@ module "keyvault_with_cmk" {
 }
 
 module "recovery_services_vault" {
-  count                    = var.recovery_services_vault != null ? 1 : 0
-  source                   = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=encryption-fix"
-  resource_group_name      = azurerm_resource_group.this.name
-  location                 = var.location
-  recovery_services_vault  = var.recovery_services_vault
-  vm_backup_policy         = var.vm_backup_policy
-  file_share_backup_policy = var.file_share_backup_policy
-  tags                     = var.tags
+  count                            = var.recovery_services_vault != null ? 1 : 0
+  source                           = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=encryption-fix"
+  name                             = var.recovery_services_vault.name
+  resource_group_name              = azurerm_resource_group.this.name
+  public_network_access_enabled    = var.recovery_services_vault.public_network_access_enabled
+  sku                              = var.recovery_services_vault.sku
+  storage_mode_type                = var.recovery_services_vault.storage_mode_type
+  cross_region_restore_enabled     = var.recovery_services_vault.cross_region_restore_enabled
+  soft_delete_enabled              = var.recovery_services_vault.soft_delete_enabled
+  system_assigned_identity_enabled = var.recovery_services_vault.system_assigned_identity_enabled
+  cmk_encryption_enabled           = var.recovery_services_vault.cmk_encryption_enabled
+  cmk_identity                     = var.recovery_services_vault.cmk_identity
+  cmk_key_vault_key_id             = var.recovery_services_vault.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_versionless_id : null
+  immutability                     = var.recovery_services_vault.immutability
+  location                         = var.location
+  vm_backup_policy                 = var.vm_backup_policy
+  file_share_backup_policy         = var.file_share_backup_policy
+  tags                             = var.tags
 }
 
 module "backup_vault" {
