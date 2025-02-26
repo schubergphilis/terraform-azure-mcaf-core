@@ -67,7 +67,7 @@ module "recovery_services_vault" {
 
 module "backup_vault" {
   count                      = var.backup_vault != null ? 1 : 0
-  source                     = "github.com/schubergphilis/terraform-azure-mcaf-backup-vault.git?ref=v0.1.1"
+  source                     = "github.com/schubergphilis/terraform-azure-mcaf-backupvault.git?ref=v0.1.1"
   resource_group_name        = azurerm_resource_group.this.name
   location                   = var.location
   backup_vault               = var.backup_vault
