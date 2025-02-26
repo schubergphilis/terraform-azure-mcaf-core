@@ -2,7 +2,6 @@
 variable "recovery_services_vault" {
   type = object({
     name                             = string
-    location                         = string
     public_network_access_enabled    = optional(bool, false)
     sku                              = optional(string, "Standard")
     storage_mode_type                = optional(string, "GeoRedundant")
@@ -231,17 +230,17 @@ variable "file_share_backup_policy" {
 }
 
 ## Backup Vault variables
-variable "backup_vault" {
-  type = object({
-    name                       = string
-    location                   = string
-    redundancy                 = string
-    immutability               = string // accepted values are "Disabled"", "Locked", "Unlocked" 
-    soft_delete_retention_days = number
-    cmk_key_vault_key_id       = optional(string, null)
-  })
-  default = null
-}
+# variable "backup_vault" {
+#   type = object({
+#     name                       = string
+#     location                   = string
+#     redundancy                 = string
+#     immutability               = string // accepted values are "Disabled"", "Locked", "Unlocked" 
+#     soft_delete_retention_days = number
+#     cmk_key_vault_key_id       = optional(string, null)
+#   })
+#   default = null
+# }
 
 variable "blob_storage_backup_policy" {
   type = map(object({
