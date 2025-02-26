@@ -10,7 +10,7 @@ variable "recovery_services_vault" {
     soft_delete_enabled              = optional(bool, true)
     system_assigned_identity_enabled = optional(bool, true)
     user_assigned_resource_ids       = optional(set(string), [])
-    cmk_identity                     = optional(string, null)
+    cmk_identity_id                  = optional(string, null)
     cmk_key_vault_key_id             = optional(string, null)
     immutability                     = optional(string, null)
     tags                             = optional(map(string), {})
