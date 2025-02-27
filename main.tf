@@ -45,24 +45,37 @@ module "keyvault_with_cmk" {
 }
 
 module "recovery_services_vault" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.1.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-recoveryservicesvault.git?ref=v0.3.0"
   count  = var.recovery_services_vault != null ? 1 : 0
 
   name                             = var.recovery_services_vault.name
   resource_group_name              = azurerm_resource_group.this.name
-  location                         = var.location
   public_network_access_enabled    = var.recovery_services_vault.public_network_access_enabled
   sku                              = var.recovery_services_vault.sku
   storage_mode_type                = var.recovery_services_vault.storage_mode_type
+  cross_region_restore_enabled     = var.recovery_services_vault.cross_region_restore_enabled
   soft_delete_enabled              = var.recovery_services_vault.soft_delete_enabled
-  immutability                     = var.recovery_services_vault.immutability
-  cmk_encryption_enabled           = var.recovery_services_vault.cmk_encryption_enabled
   system_assigned_identity_enabled = var.recovery_services_vault.system_assigned_identity_enabled
-  cmk_identity                     = var.recovery_services_vault.cmk_identity
-  cmk_key_vault_key_id             = module.keyvault_with_cmk.cmkrsa_versionless_id
-  user_assigned_resource_ids       = var.recovery_services_vault.user_assigned_resource_ids
+  user_assigned_identities         = var.recovery_services_vault.user_assigned_identities
+  cmk_identity_id                  = var.recovery_services_vault.cmk_encryption_enabled ? var.recovery_services_vault.cmk_identity_id : null
+  cmk_key_vault_key_id             = var.recovery_services_vault.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_versionless_id : null
+  immutability                     = var.recovery_services_vault.immutability
+  location                         = var.location
+  vm_backup_policy                 = var.vm_backup_policy
+  file_share_backup_policy         = var.file_share_backup_policy
   tags                             = var.tags
 }
+
+# module "backup_vault" {
+#   source                     = "github.com/schubergphilis/terraform-azure-mcaf-backupvault.git?ref=v0.1.1"
+#   count                      = var.backup_vault != null ? 1 : 0
+#   resource_group_name        = azurerm_resource_group.this.name
+#   # location                   = var.location
+#   backup_vault               = var.backup_vault
+#   blob_storage_backup_policy = var.blob_storage_backup_policy
+#   tags                       = var.tags
+# }
+
 
 module "boot_diag_storage_account" {
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"

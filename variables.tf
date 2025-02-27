@@ -8,6 +8,7 @@ variable "location" {
   type        = string
 }
 
+## Key Vault variables
 variable "key_vault" {
   type = object({
     name                            = string
@@ -79,28 +80,10 @@ Example Inputs:
 DESCRIPTION
 }
 
-variable "recovery_services_vault" {
-  description = "Configuration object for Azure Recovery Services Vault"
 
-  type = object({
-    name                             = string
-    public_network_access_enabled    = optional(bool, false)
-    sku                              = optional(string, "Standard")
-    storage_mode_type                = optional(string, "ZoneRedundant")
-    soft_delete_enabled              = optional(bool, true)
-    immutability                     = optional(bool, null)
-    cmk_encryption_enabled           = optional(bool, false)
-    cmk_identity                     = optional(string, null)
-    cmk_key_vault_key_id             = optional(string, null)
-    system_assigned_identity_enabled = optional(bool, false)
-    user_assigned_resource_ids       = optional(set(string), [])
-  })
-
-  default = null
-}
-
+## Boot Diag storage account variables
 variable "boot_diag_storage_account" {
-  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do* not support storage tiering settings"
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do not support storage tiering settings"
   type = object({
     name                              = string
     account_tier                      = optional(string, "Standard")
