@@ -1,4 +1,3 @@
-## Reocvery Services Vault variables
 variable "recovery_services_vault" {
   type = object({
     name                             = string

@@ -45,8 +45,9 @@ module "keyvault_with_cmk" {
 }
 
 module "recovery_services_vault" {
+  source                           = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=v0.2.0"
   count                            = var.recovery_services_vault != null ? 1 : 0
-  source                           = "github.com/schubergphilis/terraform-azure-mcaf-recovery-vault.git?ref=encryption-fix"
+
   name                             = var.recovery_services_vault.name
   resource_group_name              = azurerm_resource_group.this.name
   public_network_access_enabled    = var.recovery_services_vault.public_network_access_enabled
@@ -66,8 +67,8 @@ module "recovery_services_vault" {
 }
 
 # module "backup_vault" {
-#   count                      = var.backup_vault != null ? 1 : 0
 #   source                     = "github.com/schubergphilis/terraform-azure-mcaf-backupvault.git?ref=v0.1.1"
+#   count                      = var.backup_vault != null ? 1 : 0
 #   resource_group_name        = azurerm_resource_group.this.name
 #   # location                   = var.location
 #   backup_vault               = var.backup_vault
