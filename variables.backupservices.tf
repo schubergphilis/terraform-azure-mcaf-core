@@ -241,10 +241,10 @@ variable "file_share_backup_policy" {
 #   default = null
 # }
 
-variable "blob_storage_backup_policy" {
-  type = map(object({
-    retention_duration              = string
-    backup_repeating_time_intervals = list(string) // example ["R/2025-02-21T14:00:00+00:00/P1D"]
-  }))
-  default = {}
-}
+# variable "blob_storage_backup_policy" {
+#   type = map(object({
+#     retention_duration              = string
+#     backup_repeating_time_intervals = list(string) // example ["R/2025-02-21T14:00:00+00:00/P1D"]
+#   }))
+#   default = {}
+# }
