@@ -43,3 +43,8 @@ output "recovery_services_vault_id" {
 output "storage_account_id" {
   value = var.boot_diag_storage_account != null ? module.boot_diag_storage_account[0].id : null
 }
+
+output "resource_group_id" {
+  value       = azurerm_resource_group.this.id
+  description = "ID of the Resource Group created by the module"
+}
