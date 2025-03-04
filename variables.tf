@@ -30,7 +30,7 @@ variable "key_vault" {
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
     cmk_expiration_date             = optional(string, null)
-    tags = optional(map(string), {})
+    tags                            = optional(map(string), {})
   })
 }
 

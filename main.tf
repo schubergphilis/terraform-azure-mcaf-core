@@ -103,5 +103,5 @@ module "boot_diag_storage_account" {
     bypass                          = ["AzureServices"]
   }
   storage_management_policy = var.boot_diag_storage_account.storage_management_policy
-  tags                             = merge(var.boot_diag_storage_account.tags, var.tags)
+  tags                      = merge(var.boot_diag_storage_account.tags, var.tags)
 }
