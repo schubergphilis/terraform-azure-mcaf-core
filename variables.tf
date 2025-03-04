@@ -30,6 +30,7 @@ variable "key_vault" {
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
     cmk_expiration_date             = optional(string, null)
+    tags = optional(map(string), {})
   })
 }
 
@@ -103,6 +104,7 @@ variable "boot_diag_storage_account" {
       allow_protected_append_writes = optional(bool, true)
       period_since_creation_in_days = optional(number, 14)
     }), null)
+    tags = optional(map(string), {})
   })
   default = null
 }
