@@ -63,7 +63,7 @@ module "recovery_services_vault" {
   location                         = var.location
   vm_backup_policy                 = var.vm_backup_policy
   file_share_backup_policy         = var.file_share_backup_policy
-  tags                             = var.tags
+  tags                             = merge(var.recovery_services_vault.tags, var.tags)
 }
 
 # module "backup_vault" {
@@ -103,5 +103,5 @@ module "boot_diag_storage_account" {
     bypass                          = ["AzureServices"]
   }
   storage_management_policy = var.boot_diag_storage_account.storage_management_policy
-  tags                      = var.tags
+  tags                      = merge(var.boot_diag_storage_account.tags, var.tags)
 }
