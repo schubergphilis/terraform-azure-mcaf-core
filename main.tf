@@ -105,3 +105,26 @@ module "boot_diag_storage_account" {
   storage_management_policy = var.boot_diag_storage_account.storage_management_policy
   tags                      = merge(var.boot_diag_storage_account.tags, var.tags)
 }
+
+module "containerregistry" {
+  source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=v0.1.1"
+  count  = var.container_registry != null ? 1 : 0
+
+  acr = {
+    name                = var.container_registry.name
+    location            = var.location
+    resource_group_name = azurerm_resource_group.this.name
+    managed_identities = {
+      system_assigned            = var.container_registry.system_assigned_identity_enabled
+      user_assigned_resource_ids = var.container_registry.user_assigned_identities
+    }
+  }
+
+  customer_managed_key = {
+    key_vault_resource_id = var.container_registry.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
+    key_name              = var.container_registry.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
+    user_assigned_identity = {
+      resource_id = var.container_registry.cmk_encryption_enabled ? var.container_registry.cmk_identity_id : null
+    }
+  }
+}

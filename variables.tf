@@ -109,6 +109,17 @@ variable "boot_diag_storage_account" {
   default = null
 }
 
+variable "container_registry" {
+  description = "Configuration for the Azure Container Registry, including its name, identity settings, and CMK encryption."
+  type = object({
+    name                             = string
+    system_assigned_identity_enabled = optional(bool, false)
+    user_assigned_identities         = optional(set(string), [])
+    cmk_encryption_enabled           = optional(bool, false)
+    cmk_identity_id                  = optional(string, null)
+  })
+}
+
 variable "tags" {
   description = "A map of tags to assign to the resource."
   type        = map(string)
