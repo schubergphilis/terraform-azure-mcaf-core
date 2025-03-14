@@ -107,7 +107,7 @@ module "boot_diag_storage_account" {
 }
 
 module "containerregistry" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=v0.1.1"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=fix-validation"
   count  = var.container_registry != null ? 1 : 0
 
   acr = {
