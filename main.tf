@@ -106,7 +106,7 @@ module "boot_diag_storage_account" {
   tags                      = merge(var.boot_diag_storage_account.tags, var.tags)
 }
 
-module "containerregistry" {
+module "container_registry" {
   source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=fix-validation"
   count  = var.container_registry != null ? 1 : 0
 
