@@ -107,6 +107,26 @@ variable "boot_diag_storage_account" {
     tags = optional(map(string), {})
   })
   default = null
+  validation {
+    condition     = var.boot_diag_storage_account == null ? true : contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
+    error_message = "boot diagnostic storage accounts must be either 'LRS', 'GRS' or 'RAGRS'"
+  }
+}
+
+variable "container_registry" {
+  description = "Configuration for the Azure Container Registry"
+  type = object({
+    name                             = string
+    system_assigned_identity_enabled = optional(bool, false)
+    user_assigned_identities         = optional(set(string), [])
+    cmk_encryption_enabled           = optional(bool, false)
+    cmk_identity_id                  = optional(string, null)
+    role_assignments = optional(map(object({
+      principal_id         = string
+      role_definition_name = string
+    })))
+  })
+  default = null
 }
 
 variable "tags" {
