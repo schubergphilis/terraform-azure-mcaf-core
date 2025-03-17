@@ -23,6 +23,11 @@ module "azure_core" {
     name = "example-kv"
   }
 
+  container_registry = {
+    name = "example-acr"
+  }
+
+
   location = "West Europe"
   tags     = { Environment = "Production" }
 }
