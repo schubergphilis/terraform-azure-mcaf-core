@@ -107,7 +107,7 @@ module "boot_diag_storage_account" {
 }
 
 module "container_registry" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=fix-validation"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-container-registry.git?ref=v0.1.3"
   count  = var.container_registry != null ? 1 : 0
 
   acr = {
@@ -118,6 +118,7 @@ module "container_registry" {
       system_assigned            = var.container_registry.system_assigned_identity_enabled
       user_assigned_resource_ids = var.container_registry.user_assigned_identities
     }
+    role_assignments = var.container_registry.role_assignments
   }
 
   customer_managed_key = {
