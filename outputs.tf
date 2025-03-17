@@ -45,7 +45,7 @@ output "storage_account_id" {
 }
 
 output "container_registry_id" {
-  value = var.container_registry != null ? module.container_registry[0].id : null
+  value = var.container_registry != null ? module.container_registry[0].resource_id : null
 }
 
 output "resource_group_id" {
