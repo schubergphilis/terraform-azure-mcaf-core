@@ -121,11 +121,11 @@ module "container_registry" {
     role_assignments = var.container_registry.role_assignments
   }
 
-  customer_managed_key = {
-    key_vault_resource_id = var.container_registry.cmk_encryption_enabled ? module.keyvault_with_cmk.key_vault_id : null
-    key_name              = var.container_registry.cmk_encryption_enabled ? module.keyvault_with_cmk.cmkrsa_key_name : null
+  customer_managed_key = var.container_registry.cmk_encryption_enabled ? {
+    key_vault_resource_id =  module.keyvault_with_cmk.key_vault_id
+    key_name              = module.keyvault_with_cmk.cmkrsa_key_name
     user_assigned_identity = {
-      resource_id = var.container_registry.cmk_encryption_enabled ? var.container_registry.cmk_identity_id : null
+      resource_id = var.container_registry.cmk_identity_id
     }
-  }
+  } : null
 }
