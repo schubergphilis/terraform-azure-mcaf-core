@@ -111,18 +111,30 @@ module "container_registry" {
   count  = var.container_registry != null ? 1 : 0
 
   acr = {
-    name                = var.container_registry.name
-    location            = var.location
-    resource_group_name = azurerm_resource_group.this.name
+    name                          = var.container_registry.name
+    resource_group_name           = azurerm_resource_group.this.name
+    location                      = var.location
+    sku                           = var.container_registry.sku
+    anonymous_pull_enabled        = var.container_registry.anonymous_pull_enabled
+    quarantine_policy_enabled     = var.container_registry.quarantine_policy_enabled
+    admin_enabled                 = var.container_registry.admin_enabled
+    public_network_access_enabled = var.container_registry.public_network_access_enabled
+    network_rule_bypass_option    = var.container_registry.network_rule_bypass_option
+    enable_trust_policy           = var.container_registry.enable_trust_policy
+    export_policy_enabled         = var.container_registry.export_policy_enabled
+    retention_policy_in_days      = var.container_registry.retention_policy_in_days
+
     managed_identities = {
       system_assigned            = var.container_registry.system_assigned_identity_enabled
       user_assigned_resource_ids = var.container_registry.user_assigned_identities
     }
-    role_assignments = var.container_registry.role_assignments
+    georeplications         = var.container_registry.georeplications
+    zone_redundancy_enabled = var.container_registry.zone_redundancy_enabled
+    role_assignments        = var.container_registry.role_assignments
+    tags                    = merge(var.container_registry.tags, var.tags)
   }
-
   customer_managed_key = var.container_registry.cmk_encryption_enabled ? {
-    key_vault_resource_id =  module.keyvault_with_cmk.key_vault_id
+    key_vault_resource_id = module.keyvault_with_cmk.key_vault_id
     key_name              = module.keyvault_with_cmk.cmkrsa_key_name
     user_assigned_identity = {
       resource_id = var.container_registry.cmk_identity_id
