@@ -117,14 +117,31 @@ variable "container_registry" {
   description = "Configuration for the Azure Container Registry"
   type = object({
     name                             = string
+    sku                              = optional(string, "Premium")
+    anonymous_pull_enabled           = optional(bool, false)
+    quarantine_policy_enabled        = optional(bool, false)
+    admin_enabled                    = optional(bool, false)
+    public_network_access_enabled    = optional(bool, false)
+    network_rule_bypass_option       = optional(string, "None")
+    enable_trust_policy              = optional(bool, false)
+    export_policy_enabled            = optional(bool, false)
+    retention_policy_in_days         = optional(number, 7)
     system_assigned_identity_enabled = optional(bool, false)
     user_assigned_identities         = optional(set(string), [])
     cmk_encryption_enabled           = optional(bool, false)
     cmk_identity_id                  = optional(string, null)
+    georeplications = optional(list(object({
+      location                  = string
+      regional_endpoint_enabled = optional(bool, true)
+      zone_redundancy_enabled   = optional(bool, true)
+      tags                      = optional(map(any), null)
+    })), [])
+    zone_redundancy_enabled = optional(bool, true)
     role_assignments = optional(map(object({
       principal_id         = string
       role_definition_name = string
     })))
+    tags = optional(map(string), {})
   })
   default = null
 }
