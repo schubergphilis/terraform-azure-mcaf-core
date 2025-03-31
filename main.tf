@@ -30,7 +30,7 @@ module "keyvault_with_cmk" {
     sku                             = var.key_vault.sku
     ip_rules                        = length(var.key_vault.ip_rules) == 0 ? null : var.key_vault.ip_rules
     subnet_ids                      = length(var.key_vault.subnet_ids) == 0 ? null : var.key_vault.subnet_ids
-    network_bypass                  = "AzureServices"
+    network_bypass                  = var.key_vault.network_bypass
     cmk_keys_create                 = var.key_vault.cmk_keys_create
     cmk_rotation_period             = var.key_vault.cmk_rotation_period
     cmk_expiry_period               = var.key_vault.cmk_expiry_period
