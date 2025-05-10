@@ -8,11 +8,12 @@ variable "recovery_services_vault" {
     soft_delete_enabled              = optional(bool, true)
     system_assigned_identity_enabled = optional(bool, true)
     user_assigned_identities         = optional(set(string), [])
-    cmk_identity_id                  = optional(string, null)
+    cmk_identity_id                  = optional(string)
     cmk_encryption_enabled           = optional(bool, false)
-    immutability                     = optional(string, null)
+    immutability                     = optional(string)
     tags                             = optional(map(string), {})
   })
+
   default = null
 }
 
@@ -20,16 +21,16 @@ variable "vm_backup_policy" {
   type = map(object({
     name                           = string
     timezone                       = string
-    instant_restore_retention_days = optional(number, null)
+    instant_restore_retention_days = optional(number)
     policy_type                    = string
     frequency                      = string
 
-    retention_daily = optional(number, null)
+    retention_daily = optional(number)
 
     backup = object({
       time          = string
-      hour_interval = optional(number, null)
-      hour_duration = optional(number, null)
+      hour_interval = optional(number)
+      hour_duration = optional(number)
       weekdays      = optional(list(string), [])
     })
 
@@ -128,7 +129,7 @@ variable "file_share_backup_policy" {
     name            = string
     timezone        = string
     frequency       = string
-    retention_daily = optional(number, null)
+    retention_daily = optional(number)
 
     backup = object({
       time = string
@@ -236,7 +237,7 @@ variable "file_share_backup_policy" {
 #     redundancy                 = string
 #     immutability               = string // accepted values are "Disabled"", "Locked", "Unlocked" 
 #     soft_delete_retention_days = number
-#     cmk_key_vault_key_id       = optional(string, null)
+#     cmk_key_vault_key_id       = optional(string)
 #   })
 #   default = null
 # }

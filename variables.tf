@@ -1,11 +1,11 @@
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the resources."
   type        = string
+  description = "The name of the resource group in which to create the resources."
 }
 
 variable "location" {
-  description = "Location of the resources to create"
   type        = string
+  description = "Location of the resources to create"
 }
 
 ## Key Vault variables
@@ -29,31 +29,33 @@ variable "key_vault" {
     cmk_rotation_period             = optional(string, "P18M")
     cmk_expiry_period               = optional(string, "P2Y")
     cmk_notify_period               = optional(string, "P30D")
-    cmk_expiration_date             = optional(string, null)
+    cmk_expiration_date             = optional(string)
     tags                            = optional(map(string), {})
   })
 }
 
 variable "key_vault_key" {
   type = map(object({
-    name            = optional(string, null)
-    curve           = optional(string, null)
-    size            = optional(number, null)
-    type            = optional(string, null)
-    opts            = optional(set(string), null)
-    expiration_date = optional(string, null)
-    not_before_date = optional(string, null)
+    name            = optional(string)
+    curve           = optional(string)
+    size            = optional(number)
+    type            = optional(string)
+    opts            = optional(set(string))
+    expiration_date = optional(string)
+    not_before_date = optional(string)
     rotation_policy = optional(object({
       automatic = optional(object({
-        time_after_creation = optional(string, null)
-        time_before_expiry  = optional(string, null)
-      }), null)
-      expire_after         = optional(string, null)
-      notify_before_expiry = optional(string, null)
-    }), null)
+        time_after_creation = optional(string)
+        time_before_expiry  = optional(string)
+      }))
+      expire_after         = optional(string)
+      notify_before_expiry = optional(string)
+    }))
     tags = optional(map(string), {})
   }))
-  default     = {}
+
+  default = {}
+
   description = <<DESCRIPTION
 This map describes the configuration for Azure Key Vault keys.
 
@@ -84,7 +86,6 @@ DESCRIPTION
 
 ## Boot Diag storage account variables
 variable "boot_diag_storage_account" {
-  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do not support storage tiering settings"
   type = object({
     name                              = string
     account_tier                      = optional(string, "Standard")
@@ -94,19 +95,23 @@ variable "boot_diag_storage_account" {
     cmk_encryption_enabled            = optional(bool, false)
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(set(string), [])
-    ip_rules                          = optional(set(string), null)
+    ip_rules                          = optional(set(string))
     storage_management_policy = optional(object({
       blob_delete_retention_days      = optional(number, 90)
       container_delete_retention_days = optional(number, 90)
-    }), null)
+    }))
     immutability_policy = optional(object({
       state                         = optional(string, "Unlocked")
       allow_protected_append_writes = optional(bool, true)
       period_since_creation_in_days = optional(number, 14)
-    }), null)
+    }))
     tags = optional(map(string), {})
   })
+
   default = null
+
+  description = "Configure a Boot diagnostics Storage Account for the subscription, Boot Diagnostics Storage Accounts must be publically accessible, do not support Zone Redundant Storage and do not support storage tiering settings"
+
   validation {
     condition     = var.boot_diag_storage_account == null ? true : contains(["LRS", "GRS", "RAGRS"], var.boot_diag_storage_account.account_replication_type)
     error_message = "boot diagnostic storage accounts must be either 'LRS', 'GRS' or 'RAGRS'"
@@ -129,25 +134,27 @@ variable "container_registry" {
     system_assigned_identity_enabled = optional(bool, false)
     user_assigned_identities         = optional(set(string), [])
     cmk_encryption_enabled           = optional(bool, false)
-    cmk_identity_id                  = optional(string, null)
+    cmk_identity_id                  = optional(string)
     georeplications = optional(list(object({
       location                  = string
       regional_endpoint_enabled = optional(bool, true)
       zone_redundancy_enabled   = optional(bool, true)
-      tags                      = optional(map(any), null)
+      tags                      = optional(map(any))
     })), [])
     zone_redundancy_enabled = optional(bool, true)
     role_assignments = optional(map(object({
       principal_id         = string
       role_definition_name = string
     })))
+
     tags = optional(map(string), {})
   })
+
   default = null
 }
 
 variable "tags" {
-  description = "A map of tags to assign to the resource."
   type        = map(string)
+  description = "A map of tags to assign to the resource."
   default     = {}
 }
