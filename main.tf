@@ -3,12 +3,8 @@ data "azurerm_client_config" "current" {}
 resource "azurerm_resource_group" "this" {
   name     = var.resource_group_name
   location = var.location
-  tags = merge(
-    try(var.tags),
-    tomap({
-      "Resource Type" = "Resource Group"
-    })
-  )
+
+  tags = merge(var.tags, { "Resource Type" = "Resource Group" })
 }
 
 module "keyvault_with_cmk" {
