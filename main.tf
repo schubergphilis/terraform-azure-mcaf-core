@@ -76,8 +76,10 @@ module "recovery_services_vault" {
 #   tags                       = var.tags
 # }
 
-
-module "boot_diag_storage_account" {
+#checkov:skip=CKV_AZURE_21:The Storage Account is only used for VM Boot Diagnostics
+#checkov:skip=CKV_AZURE_33:The Storage Account is only used for VM Boot Diagnostics
+#checkov:skip=CKV_AZURE_47:The Storage Account is only used for VM Boot Diagnostics 
+module "boot_diag_storage_account" { 
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
   count  = var.boot_diag_storage_account != null ? 1 : 0
 
