@@ -22,7 +22,7 @@ variable "key_vault" {
     public_network_access_enabled   = optional(bool, false)
     ip_rules                        = optional(set(string), [])
     subnet_ids                      = optional(set(string), [])
-    network_bypass                  = optional(string, "None")
+    network_bypass                  = optional(string, "AzureServices")
     cmk_keys_create                 = optional(bool, true)
     cmkrsa_key_name                 = optional(string, "cmkrsa")
     cmkec_key_name                  = optional(string, "cmkec")
