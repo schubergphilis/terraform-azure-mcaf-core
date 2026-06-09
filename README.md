@@ -1,3 +1,9 @@
+<!-- migrate-repo:banner -->
+> [!IMPORTANT]
+> **This repository has moved to [`schubergphilis-ep/terraform-azure-mcaf-core`](https://github.com/schubergphilis-ep/terraform-azure-mcaf-core).**
+> Please update your references and use the new location for issues, PRs, and contributions.
+<!-- migrate-repo:banner -->
+
 # terraform-azure-mcaf-core
 Terraform module to create the Core component of each workload, currently only implements Terraform-azure-mcaf-key-vault
 
